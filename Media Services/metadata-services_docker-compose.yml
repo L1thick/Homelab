@@ -50,11 +50,11 @@ services:
       - internalNode=true
       - nodeID=MyInternalNode
     volumes:
-      - /docker/tdarr/server:/app/server      
-      - /docker/tdarr/configs:/app/configs      
-      - /docker/tdarr/logs:/app/logs
-      - /media/movies:/movies
-      - /docker/tmp/transcode:/temp
+      - /var/lib//docker/tdarr/server:/app/server      
+      - /var/lib//docker/tdarr/configs:/app/configs      
+      - /var/lib//docker/tdarr/logs:/app/logs
+      - /var/lib/docker/volumes/blueMovies/_data:/my_movies
+      - /var/lib//docker/tmp/transcode:/temp
 
   tdarr-node:
     container_name: tdarr-node

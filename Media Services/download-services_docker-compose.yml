@@ -7,7 +7,7 @@ services:
     volumes:
       - /docker/sabnzbd:/config
       - /downloads/complete:/downloads
-      - /downloads/incomplete:/incomplete-downloads
+      - /downloads/incomplete/downloading:/incomplete-downloads
     environment:
       - PUID=1000
       - PGID=1000
@@ -24,17 +24,9 @@ services:
       - TRANSMISSION_WEB_HOME=/combustion-release/
     volumes:
       - /docker/trans:/config
-      - /downloads/incomplete/processing:/downloads/complete
+      - /downloads/incomplete/av_processing:/downloads/complete
       - /downloads/incomplete/downloading:/downloads/incomplete
     restart: unless-stopped
-  docker-av:
-    image: rordi/docker-antivirus
-    container_name: docker-av
-    volumes:
-      - /downloads/incomplete/processing:/data/av/queue
-      - /downloads/complete:/data/av/ok
-      - /downloads/avCheck/bad:/data/av/nok
-      - /downloads/avCheck/quarantine:/data/av/quarantine
   gluetun:
     image: qmcgaw/gluetun
     container_name: gluetun
@@ -44,17 +36,26 @@ services:
       - /dev/net/tun:/dev/net/tun
     ports:
       - 8888:8888/tcp # HTTP proxy
-      - 8388:8388/tcp # Shadowsocks
-      - 8388:8388/udp # Shadowsocks
-      - 8080:8080 # SabNZBD
-      - 9091:9091 #transmission
-      - 51413:51413 #transmission
-      - 51413:51413/udp #transmission
+      - 9092:8080 # SabNZBD
+      - 9091:9091 #Transmission
+      - 51413:51413 #Transmission
+      - 51413:51413/udp #Transmission
     volumes:
       - /docker/gluetun:/gluetun
     environment:
       - VPN_SERVICE_PROVIDER=protonvpn
-      - OPENVPN_USER= #username
-      - OPENVPN_PASSWORD= #Password
+      - OPENVPN_USER=lithick
+      - OPENVPN_PASSWORD=hfpoo3jh4
       - SERVER_COUNTRIES=Switzerland
     restart: unless-stopped
+  docker-av:
+    image: rordi/docker-antivirus
+    container_name: docker-av
+  # command:
+  #   - /usr/local/install_alerts.sh rwagner@icloud.com
+    volumes:
+      - /downloads/incomplete/av_processing:/data/av/queue
+      - /downloads/complete:/data/av/ok
+      - /downloads/quarantine:/data/av/nok
+      - /downloads/quarantine:/data/av/quarantine
+      - /downloads/incomplete/av_processing:/data/av/scan
