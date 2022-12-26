@@ -11,7 +11,7 @@ services:
       - VERSION=docker
     volumes:
       - /docker/plex/config:/config
-      - /docker/tmp/transcode:/transcode
+      - /tmp/plexTranscodes:/transcode
       - /media/series:/tv
       - /media/movies:/movies
     restart: unless-stopped

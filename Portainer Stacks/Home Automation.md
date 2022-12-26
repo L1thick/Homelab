@@ -7,8 +7,8 @@ services:
     restart: always
     privileged: true
     ports: 
-      - 80:80
-      - 443:443
+      - 4080:80
+      # - 443:443
     volumes:
       - /docker/deCONZ:/opt/deCONZ
     devices:
