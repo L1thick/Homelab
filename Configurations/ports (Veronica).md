@@ -33,6 +33,7 @@ Network Services
 - 53:53/tcp            # PiHole TCP
 - 53:53/udp            # PiHole UDP
 - 5505:80/tcp          # PiHole WebUI
+- 8200:8200            # Duplicati WebUI
 ```
 
 Tdarr Server
