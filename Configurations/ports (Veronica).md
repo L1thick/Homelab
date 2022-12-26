@@ -42,3 +42,7 @@ Tdarr Server
 - 8267:8267            # Internal Node
 ```
 
+Host Ports
+```
+- 22                   # SFTP
+```
